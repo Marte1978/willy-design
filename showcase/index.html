@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>willy-design · Pipeline de diseño WebFactoryRD</title>
+<meta name="description" content="Skill open-source MIT para crear landings y sitios comerciales en RD. 7 sub-skills atomizadas, 12 familias visuales, integración Polar + WhatsApp + Telegram.">
+<meta name="theme-color" content="#0b1220">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wd.webfactoryrd.com">
+<meta property="og:title" content="willy-design · Pipeline de diseño WebFactoryRD">
+<meta property="og:description" content="Skill MIT para crear landings RD-friendly. 7 sub-skills + 12 familias visuales + Polar/WhatsApp drop-in.">
+<meta property="og:image" content="https://wd.webfactoryrd.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_DO">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { display: ['Plus Jakarta Sans','sans-serif'], sans: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] },
+  colors: {
+    bg: '#fafaf7', surface: '#ffffff', surface2: '#f5f3ee',
+    ink: '#0b1220', ink2: '#1a2233', muted: '#6b7280', line: 'rgba(15,23,42,0.08)',
+    accent: '#d4a574', accent2: '#b08d57', wa: '#25D366'
+  },
+  animation: { 'fade-up': 'fadeUp 0.7s ease-out', 'pulse-soft': 'pulseSoft 2.5s ease-in-out infinite' },
+  keyframes: {
+    fadeUp: { '0%': { opacity: 0, transform: 'translateY(16px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+    pulseSoft: { '0%,100%': { boxShadow: '0 0 0 0 rgba(37,211,102,0.4)' }, '50%': { boxShadow: '0 0 0 14px rgba(37,211,102,0)' } }
+  }
+} } };
+</script>
+<style>
+:root { color-scheme: light; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, sans-serif; background: #fafaf7; color: #0b1220; }
+h1, h2, h3, .display { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.02em; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(11,18,32,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11,18,32,0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.scroll-reveal { opacity: 0; transform: translateY(20px); transition: all .7s cubic-bezier(0.4,0,0.2,1); }
+.scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+.card-hover { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.card-hover:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(11,18,32,0.08); border-color: rgba(212,165,116,0.3); }
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] summary svg { transform: rotate(180deg); }
+.faq-item summary svg { transition: transform .3s ease; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; background: rgba(11,18,32,0.06); padding: 1px 6px; border-radius: 4px; }
+pre { font-family: 'JetBrains Mono', monospace; background: #0b1220; color: #e5e7eb; padding: 16px 20px; border-radius: 12px; overflow-x: auto; font-size: 13px; line-height: 1.6; }
+pre .c { color: #6b7280; } pre .k { color: #d4a574; } pre .s { color: #86efac; }
+</style>
+</head>
+<body class="antialiased">
+
+<header class="sticky top-0 z-40 bg-bg/95 backdrop-blur-md border-b border-line">
+  <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2.5">
+      <div class="w-9 h-9 bg-ink rounded-xl flex items-center justify-center text-bg font-mono font-bold text-sm">wd</div>
+      <div class="leading-tight">
+        <div class="font-display font-bold text-ink text-base">willy-design</div>
+        <div class="text-xs text-muted">por WebFactoryRD</div>
+      </div>
+    </a>
+    <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-ink/70">
+      <a href="#pipeline" class="hover:text-ink">Pipeline</a>
+      <a href="#families" class="hover:text-ink">Familias</a>
+      <a href="#blocks" class="hover:text-ink">Bloques</a>
+      <a href="#install" class="hover:text-ink">Instalar</a>
+      <a href="https://github.com/Marte1978/willy-design" target="_blank" rel="noopener" class="text-ink hover:text-accent2 inline-flex items-center gap-1.5">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="relative bg-bg overflow-hidden">
+  <div class="absolute inset-0 bg-grid opacity-50"></div>
+  <div class="relative max-w-6xl mx-auto px-5 py-20 sm:py-28">
+    <div class="max-w-3xl">
+      <div class="inline-flex items-center gap-2 mono text-xs font-semibold text-accent2 mb-5 uppercase tracking-widest">
+        <span class="w-1.5 h-1.5 bg-accent rounded-full"></span>
+        v1.0 · MIT · open source
+      </div>
+
+      <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-7xl leading-[1.04] mb-6">
+        Pipeline de diseño<br>
+        <span class="text-accent2">para landings RD.</span>
+      </h1>
+
+      <p class="text-lg sm:text-xl text-ink/70 mb-8 leading-relaxed max-w-2xl">
+        Skill open-source para Claude Code. <strong class="text-ink">7 sub-skills atomizadas</strong> + <strong class="text-ink">12 familias visuales</strong> RD-específicas + bloques drop-in para Polar, WhatsApp, RD$/USD y Telegram. <span class="text-muted">Construido por una agencia, para agencias.</span>
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 mb-8">
+        <a href="https://github.com/Marte1978/willy-design" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-ink hover:bg-ink2 text-bg font-semibold px-7 py-4 rounded-2xl text-base shadow-lg transition">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Ver en GitHub
+        </a>
+        <a href="#install" class="inline-flex items-center justify-center gap-2 bg-surface border border-line hover:border-accent text-ink font-semibold px-7 py-4 rounded-2xl text-base transition">
+          Cómo instalar →
+        </a>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted mono">
+        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span>Tailwind v4</span>
+        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span>shadcn/ui</span>
+        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span>Playwright MCP</span>
+        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span>Polar checkout</span>
+        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-accent rounded-full"></span>Vercel deploy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIADORES vs huashu -->
+<section class="bg-surface py-20 sm:py-24 border-y border-line">
+  <div class="max-w-5xl mx-auto px-5">
+    <div class="text-center max-w-2xl mx-auto mb-12 scroll-reveal">
+      <p class="mono text-xs font-bold uppercase tracking-widest text-accent2 mb-3">Por qué existe</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink leading-tight">Construido para mercado RD<br>no para Bay Area.</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5 scroll-reveal">
+      <div class="bg-bg border border-line rounded-2xl p-6 card-hover">
+        <div class="mono text-xs text-accent2 font-bold uppercase mb-3">Mobile-first</div>
+        <h3 class="font-display font-bold text-lg mb-2">3G antillano real</h3>
+        <p class="text-sm text-muted leading-relaxed">Performance budget LCP <strong class="text-ink">&lt;2.5s en 4G</strong>, JS &lt;100KB. Lighthouse gate antes de cada deploy.</p>
+      </div>
+      <div class="bg-bg border border-line rounded-2xl p-6 card-hover">
+        <div class="mono text-xs text-accent2 font-bold uppercase mb-3">WhatsApp-first</div>
+        <h3 class="font-display font-bold text-lg mb-2">CTA WhatsApp embebido</h3>
+        <p class="text-sm text-muted leading-relaxed">Mensaje pre-rellenado, sticky mobile, flotante desktop, tracking GA4/Meta. <strong class="text-ink">El email casi no convierte en RD.</strong></p>
+      </div>
+      <div class="bg-bg border border-line rounded-2xl p-6 card-hover">
+        <div class="mono text-xs text-accent2 font-bold uppercase mb-3">Compliance RD</div>
+        <h3 class="font-display font-bold text-lg mb-2">Ley 172-13 + INDOTEL</h3>
+        <p class="text-sm text-muted leading-relaxed">Privacy + términos auto-inyectados. Schema.org por rubro. RNC visible. Disclaimer médico/legal cuando aplica.</p>
+      </div>
+      <div class="bg-bg border border-line rounded-2xl p-6 card-hover">
+        <div class="mono text-xs text-accent2 font-bold uppercase mb-3">Pago RD-friendly</div>
+        <h3 class="font-display font-bold text-lg mb-2">Polar + DOP/USD toggle</h3>
+        <p class="text-sm text-muted leading-relaxed">Checkout drop-in, webhook a Telegram, split 50/50, contra-entrega. Pesos y dólares con preferencia persistente.</p>
+      </div>
+      <div class="bg-bg border border-line rounded-2xl p-6 card-hover">
+        <div class="mono text-xs text-accent2 font-bold uppercase mb-3">Review autónomo</div>
+        <h3 class="font-display font-bold text-lg mb-2">Rubric 7×25 + Playwright</h3>
+        <p class="text-sm text-muted leading-relaxed">Captura screenshots reales 3 viewports, evalúa contra 25 criterios objetivos, itera fixes hasta score ≥8/10.</p>
+      </div>
+      <div class="bg-bg border border-line rounded-2xl p-6 card-hover">
+        <div class="mono text-xs text-accent2 font-bold uppercase mb-3">MIT</div>
+        <h3 class="font-display font-bold text-lg mb-2">Uso comercial libre</h3>
+        <p class="text-sm text-muted leading-relaxed">Úsalo con tus clientes pagos, fork, modifica, vende. Solo mantén el copyright. <strong class="text-ink">Sin restricciones.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section id="pipeline" class="bg-bg py-20 sm:py-24">
+  <div class="max-w-5xl mx-auto px-5">
+    <div class="text-center max-w-2xl mx-auto mb-12 scroll-reveal">
+      <p class="mono text-xs font-bold uppercase tracking-widest text-accent2 mb-3">Pipeline 7 fases</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink leading-tight">7 sub-skills atomizadas<br>1 orquestador.</h2>
+      <p class="text-muted mt-4">Cada una invocable sola. La orquestadora las encadena. <strong class="text-ink">No es un mega-skill monolítico.</strong></p>
+    </div>
+
+    <div class="space-y-3 scroll-reveal">
+      <!-- 1 -->
+      <div class="bg-surface border border-line rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-5 card-hover">
+        <div class="flex-shrink-0 flex sm:flex-col items-center sm:items-start gap-3">
+          <div class="w-12 h-12 bg-ink text-bg rounded-xl flex items-center justify-center font-mono font-bold flex-shrink-0">1</div>
+          <code class="text-accent2 font-bold">wd-grill</code>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-display font-bold text-lg text-ink mb-1">Question form pre-flight</h3>
+          <p class="text-sm text-muted leading-relaxed">6 preguntas determinísticas en español: rubro · audiencia · ticket · tono · hook · pago. Sin estas respuestas el pipeline NO arranca. <strong class="text-ink">Anti-AI-slop gate.</strong></p>
+        </div>
+      </div>
+
+      <div class="bg-surface border border-line rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-5 card-hover">
+        <div class="flex-shrink-0 flex sm:flex-col items-center sm:items-start gap-3">
+          <div class="w-12 h-12 bg-ink text-bg rounded-xl flex items-center justify-center font-mono font-bold flex-shrink-0">2</div>
+          <code class="text-accent2 font-bold">wd-brief</code>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-display font-bold text-lg text-ink mb-1">Brief comercial completo</h3>
+          <p class="text-sm text-muted leading-relaxed">Avatar dominicano específico, top 3 dolores con frases reales, promesa central de 1 línea, 3 elementos de prueba verificables, oferta exacta, lista de prohibido decir.</p>
+        </div>
+      </div>
+
+      <div class="bg-surface border border-line rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-5 card-hover">
+        <div class="flex-shrink-0 flex sm:flex-col items-center sm:items-start gap-3">
+          <div class="w-12 h-12 bg-ink text-bg rounded-xl flex items-center justify-center font-mono font-bold flex-shrink-0">3</div>
+          <code class="text-accent2 font-bold">wd-ia</code>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-display font-bold text-lg text-ink mb-1">Information Architecture</h3>
+          <p class="text-sm text-muted leading-relaxed">8-14 secciones ordenadas por funnel (atención → interés → deseo → acción), micro-copy por CTA, jerarquía tipográfica, decisión de qué bloques drop-in usar.</p>
+        </div>
+      </div>
+
+      <div class="bg-surface border border-line rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-5 card-hover">
+        <div class="flex-shrink-0 flex sm:flex-col items-center sm:items-start gap-3">
+          <div class="w-12 h-12 bg-ink text-bg rounded-xl flex items-center justify-center font-mono font-bold flex-shrink-0">4</div>
+          <code class="text-accent2 font-bold">wd-tokens</code>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-display font-bold text-lg text-ink mb-1">Design tokens Tailwind v4</h3>
+          <p class="text-sm text-muted leading-relaxed">Paleta derivada de la familia DESIGN.md elegida, tipografía, escala spacing/radius/shadow/motion. Output <code>tokens.css</code> con <code>@theme</code> block listo. Dark mode incluido. Reduced-motion respetado.</p>
+        </div>
+      </div>
+
+      <div class="bg-surface border border-line rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-5 card-hover">
+        <div class="flex-shrink-0 flex sm:flex-col items-center sm:items-start gap-3">
+          <div class="w-12 h-12 bg-accent text-ink rounded-xl flex items-center justify-center font-mono font-bold flex-shrink-0">5</div>
+          <code class="text-accent2 font-bold">wd-build</code>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-display font-bold text-lg text-ink mb-1">HTML/JSX scaffold</h3>
+          <p class="text-sm text-muted leading-relaxed">HTML semántico WCAG 2.1 AA, microinteracciones en CSS puro (sin GSAP), schema.org por rubro, OG meta tags dinámicos. Bloques drop-in inyectados en su sitio correcto.</p>
+        </div>
+      </div>
+
+      <div class="bg-surface border border-line rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-5 card-hover">
+        <div class="flex-shrink-0 flex sm:flex-col items-center sm:items-start gap-3">
+          <div class="w-12 h-12 bg-ink text-bg rounded-xl flex items-center justify-center font-mono font-bold flex-shrink-0">6</div>
+          <code class="text-accent2 font-bold">wd-review</code>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-display font-bold text-lg text-ink mb-1">Design review autónomo</h3>
+          <p class="text-sm text-muted leading-relaxed">Playwright MCP captura screenshots a 375 / 768 / 1440 px. Pasa cada uno por rubric 7 dimensiones × 25 sub-criterios. Aplica fixes mínimos automáticamente. Itera hasta score ≥8/10.</p>
+        </div>
+      </div>
+
+      <div class="bg-surface border border-line rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-5 card-hover">
+        <div class="flex-shrink-0 flex sm:flex-col items-center sm:items-start gap-3">
+          <div class="w-12 h-12 bg-wa text-white rounded-xl flex items-center justify-center font-mono font-bold flex-shrink-0">7</div>
+          <code class="text-accent2 font-bold">wd-ship</code>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-display font-bold text-lg text-ink mb-1">Deploy a producción</h3>
+          <p class="text-sm text-muted leading-relaxed">Repo GitLab privado · Vercel deploy con custom domain · Cloudflare DNS · Polar webhook → Telegram notifier · validación HTTP 200 + SSL · reporte final con todos los URLs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 FAMILIAS -->
+<section id="families" class="bg-surface py-20 sm:py-24 border-y border-line">
+  <div class="max-w-6xl mx-auto px-5">
+    <div class="text-center max-w-2xl mx-auto mb-12 scroll-reveal">
+      <p class="mono text-xs font-bold uppercase tracking-widest text-accent2 mb-3">12 familias visuales</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink leading-tight">Cada rubro<br>tiene su lenguaje.</h2>
+      <p class="text-muted mt-4">Un colmadón <strong class="text-ink">no</strong> se ve como Stripe. Una clínica <strong class="text-ink">no</strong> se ve como Linear. Cada familia trae paleta, tipografía, copy aprobado, schema.org y compliance del rubro.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- candy-suplementos -->
+      <div class="bg-bg border border-line rounded-2xl p-5 card-hover scroll-reveal">
+        <div class="flex gap-1 mb-4">
+          <div class="w-8 h-8 rounded-full" style="background:#047857"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#c2410c"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#fafaf7"></div>
+        </div>
+        <h3 class="font-display font-bold text-lg text-ink mb-1">candy-suplementos</h3>
+        <p class="text-sm text-muted">E-commerce health, productos naturales. Copy emocional permitido en marca propia. Disclaimer médico obligatorio.</p>
+        <div class="mono text-xs text-muted mt-3">Plus Jakarta Sans · Inter</div>
+      </div>
+
+      <div class="bg-bg border border-line rounded-2xl p-5 card-hover scroll-reveal">
+        <div class="flex gap-1 mb-4">
+          <div class="w-8 h-8 rounded-full" style="background:#1e3a8a"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#b45309"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#ffffff;border:1px solid #e5e7eb"></div>
+        </div>
+        <h3 class="font-display font-bold text-lg text-ink mb-1">coopnama-financiero</h3>
+        <p class="text-sm text-muted">Cooperativas, seguros, financieros B2C. IDECOOP visible, calculadora préstamo, trust signals.</p>
+        <div class="mono text-xs text-muted mt-3">Lexend · Inter</div>
+      </div>
+
+      <div class="bg-bg border border-line rounded-2xl p-5 card-hover scroll-reveal">
+        <div class="flex gap-1 mb-4">
+          <div class="w-8 h-8 rounded-full" style="background:#1c1c1c"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#b08d57"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#fdfcf8"></div>
+        </div>
+        <h3 class="font-display font-bold text-lg text-ink mb-1">capcana-luxury</h3>
+        <p class="text-sm text-muted">Inmobiliaria luxury caribe. Aspiracional sereno, fotografía editorial, dorado champán mate.</p>
+        <div class="mono text-xs text-muted mt-3">Cormorant Garamond · Inter</div>
+      </div>
+
+      <div class="bg-bg border border-line rounded-2xl p-5 card-hover scroll-reveal">
+        <div class="flex gap-1 mb-4">
+          <div class="w-8 h-8 rounded-full" style="background:#0e7490"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#f59e0b"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#ffffff;border:1px solid #e5e7eb"></div>
+        </div>
+        <h3 class="font-display font-bold text-lg text-ink mb-1">clinica-salud</h3>
+        <p class="text-sm text-muted">Médicos, dentistas, fisio. Cédula INTEC visible, agenda online, disclaimer médico.</p>
+        <div class="mono text-xs text-muted mt-3">Plus Jakarta Sans · Inter</div>
+      </div>
+
+      <div class="bg-bg border border-line rounded-2xl p-5 card-hover scroll-reveal">
+        <div class="flex gap-1 mb-4">
+          <div class="w-8 h-8 rounded-full" style="background:#be123c"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#f59e0b"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#fdfcf6"></div>
+        </div>
+        <h3 class="font-display font-bold text-lg text-ink mb-1">restaurante-rd</h3>
+        <p class="text-sm text-muted">Restaurantes, comida criolla, cafés. Imagen del plato es el sitio. Reservas + delivery zones.</p>
+        <div class="mono text-xs text-muted mt-3">Playfair Display · Inter</div>
+      </div>
+
+      <div class="bg-bg border border-line rounded-2xl p-5 card-hover scroll-reveal">
+        <div class="flex gap-1 mb-4">
+          <div class="w-8 h-8 rounded-full" style="background:#1e3a8a"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#92400e"></div>
+          <div class="w-8 h-8 rounded-full" style="background:#fafaf9"></div>
+        </div>
+        <h3 class="font-display font-bold text-lg text-ink mb-1">abogado-bufete</h3>
+        <p class="text-sm text-muted">Abogados, notarios. Cédula CARD visible, casos anonimizados, disclaimer abogado-cliente.</p>
+        <div class="mono text-xs text-muted mt-3">Lora · Inter</div>
+      </div>
+    </div>
+
+    <div class="mt-10 text-center scroll-reveal">
+      <p class="text-muted text-sm mb-3">+ 6 familias en roadmap v2</p>
+      <div class="flex flex-wrap gap-2 justify-center text-xs mono">
+        <span class="bg-surface2 border border-line px-3 py-1.5 rounded-full text-muted">colmadon-moderno</span>
+        <span class="bg-surface2 border border-line px-3 py-1.5 rounded-full text-muted">iglesia-comunidad</span>
+        <span class="bg-surface2 border border-line px-3 py-1.5 rounded-full text-muted">taller-mecanico</span>
+        <span class="bg-surface2 border border-line px-3 py-1.5 rounded-full text-muted">gimnasio-fitness</span>
+        <span class="bg-surface2 border border-line px-3 py-1.5 rounded-full text-muted">seguros-rd</span>
+        <span class="bg-surface2 border border-line px-3 py-1.5 rounded-full text-muted">educacion-cursos</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOQUES -->
+<section id="blocks" class="bg-bg py-20 sm:py-24">
+  <div class="max-w-5xl mx-auto px-5">
+    <div class="text-center max-w-2xl mx-auto mb-12 scroll-reveal">
+      <p class="mono text-xs font-bold uppercase tracking-widest text-accent2 mb-3">5 bloques drop-in</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink leading-tight">Plug-and-play para tu stack.</h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 scroll-reveal">
+      <div class="bg-surface border border-line rounded-2xl p-5 card-hover">
+        <div class="w-10 h-10 bg-wa rounded-xl flex items-center justify-center text-white mb-3">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        </div>
+        <code class="text-accent2 text-sm font-bold">whatsapp/</code>
+        <h3 class="font-display font-bold text-base mt-1 mb-1">CTA WhatsApp</h3>
+        <p class="text-sm text-muted">Botón + sticky-mobile + flotante. Mensaje pre-rellenado. Tracking GA4/Meta.</p>
+      </div>
+
+      <div class="bg-surface border border-line rounded-2xl p-5 card-hover">
+        <div class="w-10 h-10 bg-ink rounded-xl flex items-center justify-center text-bg mb-3 font-mono font-bold text-xs">$</div>
+        <code class="text-accent2 text-sm font-bold">polar/</code>
+        <h3 class="font-display font-bold text-base mt-1 mb-1">Checkout Polar</h3>
+        <p class="text-sm text-muted">Botón con price display, ahorro, trust badges, tracking InitiateCheckout.</p>
+      </div>
+
+      <div class="bg-surface border border-line rounded-2xl p-5 card-hover">
+        <div class="w-10 h-10 bg-accent rounded-xl flex items-center justify-center text-ink mb-3 font-mono font-bold text-xs">RD</div>
+        <code class="text-accent2 text-sm font-bold">rd-price/</code>
+        <h3 class="font-display font-bold text-base mt-1 mb-1">Toggle DOP/USD</h3>
+        <p class="text-sm text-muted">Pesos y dólares con preferencia persistente en localStorage.</p>
+      </div>
+
+      <div class="bg-surface border border-line rounded-2xl p-5 card-hover">
+        <div class="w-10 h-10 bg-ink2 rounded-xl flex items-center justify-center text-bg mb-3">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <code class="text-accent2 text-sm font-bold">rd-map/</code>
+        <h3 class="font-display font-bold text-base mt-1 mb-1">Google Maps RD</h3>
+        <p class="text-sm text-muted">Embed con dirección + "Cómo llegar" deep-link a Google Maps app.</p>
+      </div>
+
+      <div class="bg-surface border border-line rounded-2xl p-5 card-hover">
+        <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center text-white mb-3">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+        </div>
+        <code class="text-accent2 text-sm font-bold">telegram/</code>
+        <h3 class="font-display font-bold text-base mt-1 mb-1">Polar webhook</h3>
+        <p class="text-sm text-muted">Vercel serverless verifica firma Standard Webhooks y notifica al Telegram.</p>
+      </div>
+
+      <div class="bg-ink text-bg border border-ink rounded-2xl p-5 card-hover flex flex-col">
+        <div class="flex-1">
+          <p class="mono text-xs text-accent uppercase font-bold mb-2">+v2</p>
+          <h3 class="font-display font-bold text-base mb-1">Más bloques en camino</h3>
+          <p class="text-sm text-bg/70">Azul.do · Stripe · MJML email · Mailerlite · Calendly · Sanity CMS</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section id="install" class="bg-surface py-20 sm:py-24 border-y border-line">
+  <div class="max-w-3xl mx-auto px-5">
+    <div class="text-center mb-10 scroll-reveal">
+      <p class="mono text-xs font-bold uppercase tracking-widest text-accent2 mb-3">Instalación</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink">3 comandos. 30 segundos.</h2>
+    </div>
+
+    <div class="space-y-4 scroll-reveal">
+      <div>
+        <p class="mono text-xs font-bold uppercase tracking-wider text-muted mb-2">1. Clonar</p>
+<pre><span class="c"># clonar el repo</span>
+<span class="k">git</span> clone https://github.com/Marte1978/willy-design.git</pre>
+      </div>
+      <div>
+        <p class="mono text-xs font-bold uppercase tracking-wider text-muted mb-2">2. Copiar las skills al directorio Claude Code</p>
+<pre><span class="c"># macOS / Linux / Windows MSYS</span>
+<span class="k">cp</span> -r willy-design/skills/* ~/.claude/skills/
+
+<span class="c"># asegurar que designs / blocks / rubrics estén accesibles</span>
+<span class="k">cp</span> -r willy-design/{designs,blocks,rubrics} ~/.claude/skills/willy-design/</pre>
+      </div>
+      <div>
+        <p class="mono text-xs font-bold uppercase tracking-wider text-muted mb-2">3. Reabrir Claude Code y usar</p>
+<pre><span class="k">/willy-design</span> hazme una landing para <span class="s">"Clínica Sonrisa Plus"</span></pre>
+      </div>
+    </div>
+
+    <div class="mt-10 bg-bg border border-line rounded-2xl p-5 sm:p-6 scroll-reveal">
+      <h3 class="font-display font-bold text-base mb-3">Requisitos</h3>
+      <ul class="text-sm text-muted space-y-1.5">
+        <li class="flex gap-2"><span class="text-accent2">→</span><a href="https://claude.com/claude-code" class="text-ink hover:underline" target="_blank" rel="noopener">Claude Code</a> instalado</li>
+        <li class="flex gap-2"><span class="text-accent2">→</span>Cuenta Vercel (free tier sirve)</li>
+        <li class="flex gap-2"><span class="text-accent2">→</span>Cuenta Cloudflare con dominio configurado (opcional para el subdominio webfactoryrd.com)</li>
+        <li class="flex gap-2"><span class="text-accent2">→</span>Cuenta Polar (opcional, solo si vendes con checkout)</li>
+        <li class="flex gap-2"><span class="text-accent2">→</span>Bot Telegram (opcional, solo para notificaciones)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="bg-bg py-20 sm:py-24">
+  <div class="max-w-3xl mx-auto px-5">
+    <div class="text-center mb-10 scroll-reveal">
+      <p class="mono text-xs font-bold uppercase tracking-widest text-accent2 mb-3">FAQ</p>
+      <h2 class="font-display font-bold text-3xl sm:text-4xl text-ink">Preguntas frecuentes</h2>
+    </div>
+
+    <div class="space-y-3">
+      <details class="faq-item bg-surface border border-line rounded-2xl scroll-reveal" open>
+        <summary class="flex items-center justify-between p-5">
+          <span class="font-display font-bold text-base text-ink pr-4">¿En qué se diferencia de huashu-design?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 text-muted"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="px-5 pb-5 text-sm text-muted leading-relaxed">
+          <code>huashu-design</code> es un mega-skill monolítico con 20 filosofías de diseño abstractas. <code>willy-design</code> es atomizado en 7 sub-skills, optimizado para mercado RD (compliance, pago, mapas, copy en español natural), trae integración drop-in con Polar/WhatsApp, y usa rubric medible 7×25 con Playwright real en lugar de evaluación subjetiva. Y la licencia es MIT — uso comercial libre.
+        </div>
+      </details>
+
+      <details class="faq-item bg-surface border border-line rounded-2xl scroll-reveal">
+        <summary class="flex items-center justify-between p-5">
+          <span class="font-display font-bold text-base text-ink pr-4">¿Puedo usar esto en clientes pagos?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 text-muted"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="px-5 pb-5 text-sm text-muted leading-relaxed">
+          Sí. Licencia MIT — úsalo libremente con clientes, fork, modifica, hasta vende derivados. Solo mantén el copyright en el archivo LICENSE.
+        </div>
+      </details>
+
+      <details class="faq-item bg-surface border border-line rounded-2xl scroll-reveal">
+        <summary class="flex items-center justify-between p-5">
+          <span class="font-display font-bold text-base text-ink pr-4">¿Funciona fuera de RD?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 text-muted"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="px-5 pb-5 text-sm text-muted leading-relaxed">
+          Sí, pero está optimizado para mercado RD. Si vas a usarlo en otro mercado LATAM, considera reemplazar la familia de DESIGN.md para tu contexto. Los bloques drop-in (Polar, WhatsApp, RD-price, RD-map) son configurables — solo cambia los IDs/números/coordenadas.
+        </div>
+      </details>
+
+      <details class="faq-item bg-surface border border-line rounded-2xl scroll-reveal">
+        <summary class="flex items-center justify-between p-5">
+          <span class="font-display font-bold text-base text-ink pr-4">¿Necesito Vercel obligatoriamente?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 text-muted"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="px-5 pb-5 text-sm text-muted leading-relaxed">
+          No. <code>wd-ship</code> hace deploy a Vercel por default, pero puedes adaptar para Netlify, GitLab Pages o tu propio VPS. El bloque <code>telegram/polar-webhook.js</code> está escrito para Vercel serverless functions — para otra plataforma adapta el handler.
+        </div>
+      </details>
+
+      <details class="faq-item bg-surface border border-line rounded-2xl scroll-reveal">
+        <summary class="flex items-center justify-between p-5">
+          <span class="font-display font-bold text-base text-ink pr-4">¿Puedo agregar mi propia familia DESIGN.md?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 text-muted"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="px-5 pb-5 text-sm text-muted leading-relaxed">
+          Sí. Copia el formato de cualquiera de las 6 incluidas (paleta, tipografía, patrones, microcopy, schema.org, bloques, compliance) y agrégala a <code>designs/</code>. PRs bienvenidos en GitHub para incluirla en futuras versiones.
+        </div>
+      </details>
+
+      <details class="faq-item bg-surface border border-line rounded-2xl scroll-reveal">
+        <summary class="flex items-center justify-between p-5">
+          <span class="font-display font-bold text-base text-ink pr-4">¿Cómo se compara contra contratar un diseñador?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 text-muted"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="px-5 pb-5 text-sm text-muted leading-relaxed">
+          No reemplaza a un buen diseñador para proyectos premium. <strong class="text-ink">Es para servicios productizados</strong>: cuando vendes "página web en 24h por US$200" y necesitas un pipeline ejecutable. Para una marca con identidad rica, presupuesto y tiempo, contrata un humano.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="bg-ink text-bg py-20 sm:py-24 relative overflow-hidden">
+  <div class="absolute inset-0 bg-grid opacity-10"></div>
+  <div class="relative max-w-3xl mx-auto px-5 text-center scroll-reveal">
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tight mb-5">
+      Construido por una agencia,<br>
+      <span class="text-accent">para agencias.</span>
+    </h2>
+    <p class="text-bg/70 text-lg mb-9 max-w-xl mx-auto">
+      WebFactoryRD lo usa cada semana en producción. Si te ahorra 10 horas, vale el clone.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="https://github.com/Marte1978/willy-design" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent2 text-ink font-bold px-8 py-4 rounded-2xl text-base shadow-2xl transition">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Clonar en GitHub
+      </a>
+      <a href="https://wa.me/18098120157?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20de%20willy-design" class="inline-flex items-center justify-center gap-2 bg-wa hover:bg-wa-2 text-white font-semibold px-7 py-4 rounded-2xl text-base transition">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Hablar con Willy
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-ink2 text-bg/60 py-10">
+  <div class="max-w-6xl mx-auto px-5 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+    <div class="flex items-center gap-2.5">
+      <div class="w-7 h-7 bg-bg text-ink rounded-lg flex items-center justify-center font-mono font-bold text-xs">wd</div>
+      <span class="font-display font-semibold text-bg">willy-design</span>
+      <span class="opacity-50">© 2026 WebFactoryRD</span>
+    </div>
+    <div class="flex gap-5 text-xs">
+      <a href="https://github.com/Marte1978/willy-design" target="_blank" rel="noopener" class="hover:text-bg transition">GitHub</a>
+      <a href="https://webfactoryrd.com" target="_blank" rel="noopener" class="hover:text-bg transition">WebFactoryRD</a>
+      <span class="opacity-50">MIT License</span>
+      <span class="opacity-50">Hecho en 🇩🇴</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.scroll-reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

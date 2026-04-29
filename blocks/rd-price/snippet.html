@@ -1,0 +1,84 @@
+<!-- ============================================================
+     willy-design · block: rd-price
+     ============================================================
+     Toggle DOP/USD con tasa configurable. Pensado para sitios
+     que necesitan mostrar precio en pesos dominicanos pero
+     también dar visibilidad en USD a la diáspora.
+
+     Reemplaza:
+     - {{PRICE_DOP}}     precio en RD$ · ej: 5990
+     - {{PRICE_USD}}     precio en USD · ej: 100
+     - {{RATE}}          tasa visualizada · ej: "1 USD = RD$59.90"
+                         (no se usa para cálculo dinámico — es solo display)
+============================================================ -->
+
+<div class="rd-price-wrap" data-rd-price>
+  <div class="rd-price-toggle inline-flex bg-surface-2 border border-line rounded-full p-1 mb-3 text-sm font-semibold">
+    <button type="button" class="rd-price-btn px-4 py-1.5 rounded-full transition" data-currency="dop" aria-pressed="true">RD$</button>
+    <button type="button" class="rd-price-btn px-4 py-1.5 rounded-full transition" data-currency="usd" aria-pressed="false">US$</button>
+  </div>
+
+  <div class="rd-price-amount font-display font-extrabold text-4xl sm:text-5xl text-ink leading-none">
+    <span class="rd-price-symbol">RD$</span>
+    <span class="rd-price-value">{{PRICE_DOP}}</span>
+  </div>
+
+  <div class="text-xs text-muted mt-2">{{RATE}}</div>
+</div>
+
+<style>
+.rd-price-btn {
+  background: transparent;
+  border: 0;
+  color: var(--color-muted);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+.rd-price-btn[aria-pressed="true"] {
+  background: var(--color-ink);
+  color: var(--color-bg);
+  box-shadow: var(--shadow-sm);
+}
+</style>
+
+<script>
+(() => {
+  const wrap = document.querySelector('[data-rd-price]');
+  if (!wrap) return;
+
+  const PRICE_DOP = "{{PRICE_DOP}}";
+  const PRICE_USD = "{{PRICE_USD}}";
+
+  const formatNumber = (n) => Number(n).toLocaleString('en-US');
+
+  const set = (currency) => {
+    const symbol = wrap.querySelector('.rd-price-symbol');
+    const value  = wrap.querySelector('.rd-price-value');
+    if (currency === 'usd') {
+      symbol.textContent = 'US$';
+      value.textContent  = formatNumber(PRICE_USD);
+    } else {
+      symbol.textContent = 'RD$';
+      value.textContent  = formatNumber(PRICE_DOP);
+    }
+    wrap.querySelectorAll('.rd-price-btn').forEach(b => {
+      b.setAttribute('aria-pressed', b.dataset.currency === currency ? 'true' : 'false');
+    });
+    try {
+      localStorage.setItem('wd-currency', currency);
+    } catch(e) {}
+  };
+
+  // Restore preferred currency
+  try {
+    const saved = localStorage.getItem('wd-currency');
+    if (saved === 'usd') set('usd');
+  } catch(e) {}
+
+  wrap.querySelectorAll('.rd-price-btn').forEach(btn => {
+    btn.addEventListener('click', () => set(btn.dataset.currency));
+  });
+})();
+</script>

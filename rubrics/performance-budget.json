@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/GoogleChrome/lighthouse/main/types/lh-budget.d.ts",
+  "name": "willy-design performance budget — RD-friendly",
+  "description": "Budget enforced en wd-review antes de wd-ship. Asume conexión 4G inestable RD (Slow 4G).",
+  "budgets": [
+    {
+      "path": "/*",
+      "resourceSizes": [
+        { "resourceType": "script",     "budget": 100 },
+        { "resourceType": "stylesheet", "budget": 50 },
+        { "resourceType": "image",      "budget": 800 },
+        { "resourceType": "font",       "budget": 100 },
+        { "resourceType": "document",   "budget": 80 },
+        { "resourceType": "third-party","budget": 150 },
+        { "resourceType": "total",      "budget": 1200 }
+      ],
+      "resourceCounts": [
+        { "resourceType": "script",     "budget": 5 },
+        { "resourceType": "stylesheet", "budget": 3 },
+        { "resourceType": "image",      "budget": 25 },
+        { "resourceType": "font",       "budget": 4 },
+        { "resourceType": "third-party","budget": 6 }
+      ],
+      "timings": [
+        { "metric": "first-contentful-paint",   "budget": 1800 },
+        { "metric": "largest-contentful-paint", "budget": 2500 },
+        { "metric": "interactive",              "budget": 3500 },
+        { "metric": "cumulative-layout-shift",  "budget": 100 },
+        { "metric": "total-blocking-time",      "budget": 200 }
+      ]
+    }
+  ]
+}

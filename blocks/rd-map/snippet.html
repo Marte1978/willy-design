@@ -1,0 +1,46 @@
+<!-- ============================================================
+     willy-design · block: rd-map
+     ============================================================
+     Google Maps embed configurado para RD con dirección + marker
+     + link "Cómo llegar".
+
+     Reemplaza:
+     - {{ADDRESS}}       ej: "Av. Winston Churchill 71, Santo Domingo"
+     - {{MAPS_QUERY}}    ej: "Av+Winston+Churchill+71+Santo+Domingo"
+                              (URL-encoded para Google Maps)
+     - {{LAT}}           ej: 18.4756  (opcional, para el embed iframe)
+     - {{LNG}}           ej: -69.9145
+     - {{NAME}}          nombre del lugar · ej: "Bufete Reyes & Asociados"
+============================================================ -->
+
+<div class="rd-map-wrap rounded-2xl overflow-hidden border border-line shadow-md">
+  <div class="aspect-[16/9] sm:aspect-[16/7] bg-surface-2">
+    <iframe
+      src="https://maps.google.com/maps?q={{LAT}},{{LNG}}&z=16&output=embed"
+      width="100%"
+      height="100%"
+      style="border:0;"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Ubicación de {{NAME}}"
+      class="block w-full h-full">
+    </iframe>
+  </div>
+
+  <div class="bg-surface p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-line">
+    <div>
+      <p class="font-display font-bold text-ink text-base">{{NAME}}</p>
+      <p class="text-sm text-muted">{{ADDRESS}}</p>
+    </div>
+    <a href="https://www.google.com/maps/dir/?api=1&destination={{MAPS_QUERY}}"
+       target="_blank"
+       rel="noopener"
+       class="inline-flex items-center gap-2 bg-primary text-primary-fg font-semibold text-sm px-4 py-2.5 rounded-xl whitespace-nowrap hover:opacity-90 transition">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <path d="M3 11l19-9-9 19-2-8-8-2z"/>
+      </svg>
+      Cómo llegar
+    </a>
+  </div>
+</div>
