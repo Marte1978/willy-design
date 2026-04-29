@@ -50,6 +50,17 @@ Activación end-to-end automática con `/willy-design [cliente]`. Cada sub-skill
 └─ wd-ship    ── Vercel deploy + custom domain + Cloudflare DNS + Polar webhook + Telegram notify
 ```
 
+### Sub-skills extra (invocables en paralelo al pipeline)
+
+```
+wd-deck   ── Decks 1920×1080 HTML + export a PPTX/PDF (pptxgenjs nativo, no scrape DOM)
+wd-video  ── HTML animado → MP4/GIF 60fps + BGM + voz off (Playwright captura + ffmpeg)
+```
+
+`wd-deck` se invoca cuando Willy diga "haz un deck", "haz una presentación", "exporta a PPTX".
+`wd-video` se invoca cuando Willy diga "anima esto", "haz un video del [diseño]", "exporta a MP4".
+Ambos usan los tokens.css + bloques drop-in del pipeline principal — son extensiones, no reemplazo.
+
 ## Cómo orquestar el pipeline
 
 Cuando se activa `/willy-design [contexto]`:

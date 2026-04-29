@@ -14,7 +14,7 @@
 
 El skill está optimizado para el mercado dominicano: el copy es en español RD natural, los precios van en RD$ y US$, los pagos por Polar / contra-entrega / WhatsApp, los mapas de Google centrados en RD, y la performance medida en 4G antillano (no en fibra de Bay Area).
 
-## Pipeline 7 fases
+## Pipeline 7 fases + 2 extras
 
 ```
 willy-design (orquestador)
@@ -25,6 +25,10 @@ willy-design (orquestador)
    ├── wd-build   ── HTML/JSX + Tailwind + bloques drop-in
    ├── wd-review  ── Playwright MCP + rubric 7×25 + iteración
    └── wd-ship    ── Vercel deploy + DNS + Polar webhook + Telegram
+
+Sub-skills extra (invocables en paralelo):
+   ├── wd-deck    ── slides 1920×1080 HTML + export PPTX (pptxgenjs nativo)
+   └── wd-video   ── HTML animado → MP4/GIF 60fps + BGM (Playwright + ffmpeg)
 ```
 
 Cada sub-skill es invocable independientemente. El orquestador las encadena automáticamente.
